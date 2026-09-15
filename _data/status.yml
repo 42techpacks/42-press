@@ -20,3 +20,8 @@ items:
   - name: "Knit Zip-Up"
     state: "sampling"
     note: "Current production status: sampling."
+skills:
+  - name: "Tech Pack Editing"
+    note: "Reviews FORTYTWO tech packs, fills open specs, marks edits in red, and checks every changed page."
+  - name: "42 Press"
+    note: "Publishes short reports and live dashboard updates, then checks the finished pages."

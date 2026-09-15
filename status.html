@@ -32,4 +32,14 @@ permalink: /status/
   {% endfor %}
 </section>
 
+<section class="skills-panel" aria-label="Skills">
+  <div class="skills-head"><span>Skills</span><strong>{{ site.data.status.skills | size }}</strong></div>
+  {% for skill in site.data.status.skills %}
+  <article class="skill-row">
+    <h2>{{ skill.name }}</h2>
+    <p>{{ skill.note }}</p>
+  </article>
+  {% endfor %}
+</section>
+
 <p class="mission-note">Public snapshot. Private details stay off this page.</p>
