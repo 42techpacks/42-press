@@ -1,51 +1,15 @@
 ---
 layout: default
-title: Mission Control
+title: Status
 permalink: /status/
 ---
-<section class="mission-head">
-  <div>
-    <span class="mission-eyebrow"><i></i> Live</span>
-    <h1>Mission Control</h1>
-  </div>
-  <div class="mission-updated">Updated<br><strong>{{ site.data.status.updated_at }}</strong></div>
-</section>
-
-<section class="mission-stats" aria-label="Work summary">
-  <div class="mission-stat"><strong>{{ site.data.status.summary }}</strong><span>Total</span></div>
-  <div class="mission-stat working"><strong>{{ site.data.status.counts.working }}</strong><span>Working</span></div>
-  <div class="mission-stat waiting"><strong>{{ site.data.status.counts.waiting }}</strong><span>Waiting</span></div>
-  <div class="mission-stat blocked"><strong>{{ site.data.status.counts.blocked }}</strong><span>Blocked</span></div>
-</section>
-
-<section class="mission-grid" aria-label="Current work">
-  {% for item in site.data.status.items %}
-  {% assign state_class = item.state | slugify %}
-  <article class="mission-card {{ state_class }}" style="--card-order:{{ forloop.index0 }}">
-    <div class="mission-card-top">
-      <span class="mission-number">0{{ forloop.index }}</span>
-      <span class="mission-state"><i></i>{{ item.state }}</span>
-    </div>
-    <h2>{{ item.name }}</h2>
-    <p>{{ item.note }}</p>
-  </article>
-  {% endfor %}
-</section>
-
-<section class="skills-panel" aria-label="Skills">
-  <div class="skills-head"><span>Skills</span><strong>{{ site.data.status.skills | size }}</strong></div>
-  {% for skill in site.data.status.skills %}
-  <details class="skill-row skill-disclosure">
-    <summary>
-      <span class="skill-summary-copy"><strong>{{ skill.name }}</strong><span>{{ skill.note }}</span></span>
-      <span class="skill-toggle" aria-hidden="true"><i></i><i></i></span>
-    </summary>
-    <div class="skill-detail">
-      {% if skill.name == "Tech Pack Editing" %}{% include skills/tech-pack-editing.html %}{% endif %}
-      {% if skill.name == "42 Press" %}{% include skills/42-press.html %}{% endif %}
-    </div>
-  </details>
-  {% endfor %}
-</section>
-
-<p class="mission-note">Public snapshot. Private details stay off this page.</p>
+<div class="card list">
+{% for task in site.data.status.tasks %}
+{% assign state_class = task.state | slugify %}
+<div class="row">
+<span class="n">0{{ forloop.index }}</span>
+<h3>{{ task.name }}{% if task.note %}<span class="sub">{{ task.note }}</span>{% endif %}</h3>
+<span class="tag {{ state_class }}">{{ task.state }}</span>
+</div>
+{% endfor %}
+</div>

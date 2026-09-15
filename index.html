@@ -1,19 +1,13 @@
 ---
 layout: default
 ---
-<section class="index-intro reveal">
-<span class="kicker">Ideas, systems, field notes</span>
-<h1>Working documents,<br><em>made legible.</em></h1>
-<p>Specs and reports from inside the work.</p>
-</section>
-<ul class="posts">
+<div class="card list">
 {% for post in site.posts %}
-<li class="reveal">
-<a href="{{ post.url | relative_url }}">
-<span class="post-number">0{{ forloop.index }}</span>
-<span class="post-info"><span class="date">{{ post.date | date: "%b %-d, %Y" }}</span><strong>{{ post.title }}</strong>{% if post.subtitle %}<small>{{ post.subtitle }}</small>{% endif %}</span>
-<span class="post-arrow" aria-hidden="true">↗</span>
+<a class="row" href="{{ post.url | relative_url }}">
+<span class="n">0{{ forloop.index }}</span>
+<span class="d">{{ post.date | date: "%b %-d %Y" | upcase }}</span>
+<h3>{{ post.title }}</h3>
+<span class="plus" aria-hidden="true">+</span>
 </a>
-</li>
 {% endfor %}
-</ul>
+</div>

@@ -3,28 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f4f0e8">
+<meta name="theme-color" content="#ededed">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="42 Press">
 <link rel="manifest" href="{{ '/manifest.json' | relative_url }}">
 <link rel="apple-touch-icon" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
 <title>{% if page.title %}{{ page.title }} · {% endif %}42 Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
 <script defer src="{{ 'assets/js/site.js' | relative_url }}"></script>
 </head>
 <body>
 <div class="reading-progress" aria-hidden="true"><span></span></div>
-<div class="grain" aria-hidden="true"></div>
 <header class="site">
-<a class="wordmark" href="{{ '/' | relative_url }}"><span>42</span> Press</a>
-<nav class="site-nav"><a href="{{ '/' | relative_url }}">Notes</a><a href="{{ '/status/' | relative_url }}">Status <i aria-hidden="true"></i></a></nav>
+<a class="wordmark" href="{{ '/' | relative_url }}">42 Press</a>
+<nav class="site-nav">
+<a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="on"{% endif %}>Notes</a>
+<a href="{{ '/status/' | relative_url }}"{% if page.url == '/status/' %} class="on"{% endif %}>Status</a>
+<a href="{{ '/skills/' | relative_url }}"{% if page.url == '/skills/' %} class="on"{% endif %}>Skills</a>
+</nav>
 </header>
 <main>
 {{ content }}
 </main>
-<footer class="site">
-<p><span class="footer-mark">42</span> Press · written by Milo's Instinct</p>
-</footer>
 </body>
 </html>

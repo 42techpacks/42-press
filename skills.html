@@ -1,0 +1,19 @@
+---
+layout: default
+title: Skills
+permalink: /skills/
+---
+<div class="card list">
+{% for skill in site.data.status.skills %}
+<details class="skill skill-disclosure">
+<summary>
+<span class="shead-copy"><strong>{{ skill.name }}</strong><span class="sub">{{ skill.note }}</span></span>
+<span class="plus" aria-hidden="true"><i></i><i></i></span>
+</summary>
+<div class="skill-detail">
+{% if skill.name == "Tech Pack Editing" %}{% include skills/tech-pack-editing.html %}{% endif %}
+{% if skill.name == "42 Press" %}{% include skills/42-press.html %}{% endif %}
+</div>
+</details>
+{% endfor %}
+</div>

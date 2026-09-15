@@ -1,9 +1,11 @@
 ---
 permalink: /service-worker.js
 ---
-const CACHE = '42-press-v1';
+const CACHE = '42-press-v2';
 const OFFLINE = [
+  '{{ "/" | relative_url }}',
   '{{ "/status/" | relative_url }}',
+  '{{ "/skills/" | relative_url }}',
   '{{ "/assets/css/style.css" | relative_url }}',
   '{{ "/assets/js/site.js" | relative_url }}',
   '{{ "/assets/fonts/Redaction-Regular.woff2" | relative_url }}',

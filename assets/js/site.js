@@ -29,11 +29,11 @@
     skill.addEventListener('toggle', () => {
       if (!detail || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       detail.animate(skill.open ? [
-        { opacity: 0, transform: 'translateY(-8px)' },
+        { opacity: 0, transform: 'translateY(-6px)' },
         { opacity: 1, transform: 'translateY(0)' }
       ] : [
         { opacity: 1 }, { opacity: 0 }
-      ], { duration: 280, easing: 'cubic-bezier(.2,.8,.2,1)' });
+      ], { duration: 240, easing: 'cubic-bezier(.2,.8,.2,1)' });
     });
   });
 

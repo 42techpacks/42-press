@@ -1,25 +1,19 @@
-updated_at: "September 15, 2026 · 12:10 AM ET"
-summary: "5 products"
-counts:
-  working: 3
-  waiting: 0
-  blocked: 0
-items:
-  - name: "Home Field Tee V3"
-    state: "sample in hand"
-    note: "Current production status: sample in hand."
-  - name: "Home Field Long Sleeve V1"
-    state: "sent to factory"
-    note: "Current production status: sent to factory."
-  - name: "Flag Tee V2"
-    state: "sent to factory"
-    note: "Current production status: sent to factory."
-  - name: "Legend Crewneck V2"
-    state: "sample in hand"
-    note: "Current production status: sample in hand."
-  - name: "Knit Zip-Up"
-    state: "sampling"
-    note: "Current production status: sampling."
+updated_at: "September 15, 2026 - 12:40 AM ET"
+tasks:
+  - name: "Raglan Polo V2 edit pass"
+    state: "waiting on you"
+  - name: "WC26 tech pack to Bella"
+    state: "waiting on you"
+    note: "Due September 17."
+  - name: "IP PIN to Rivet Tax"
+    state: "waiting on you"
+  - name: "42 Press redesign"
+    state: "in progress"
+  - name: "fortytwoco.net rebuild spec"
+    state: "done"
+  - name: "Gwenda factory reply"
+    state: "blocked"
+    note: "Blocked on the WhatsApp session."
 skills:
   - name: "Tech Pack Editing"
     note: "Reviews FORTYTWO tech packs, fills open specs, marks edits in red, and checks every changed page."

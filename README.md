@@ -26,10 +26,6 @@ Body text is Redaction (Regular/Bold/Italic, self-hosted in
 `assets/fonts/`, SIL OFL 1.1 — see `assets/fonts/OFL.txt`), falling back to
 Georgia/serif.
 
-## Publishing authentication
-
-A repo-scoped fine-grained PAT is stored in Milo's vault as `GitHub 42 Press publish token`. It is restricted to the `42techpacks/42-press` repository with **Contents: read and write**. Use that saved credential for future commits instead of asking Milo to approve a new device-flow code.
-
 ## Refresh the work status page
 
 The live desk is at `status.html`; all changing content lives in
@@ -40,12 +36,12 @@ browser.
 For every refresh:
 
 1. Read the current active task-agent and todo state from the source systems.
-2. Replace `updated_at`, `summary`, and `items` in `_data/status.yml`.
+2. Replace `updated_at` and `tasks` in `_data/status.yml`.
 3. Use the exact product, file, or task name so the card is easy to recognize.
    Keep the note discreet: never publish factory names, prices, account details,
    personal message text, or sensitive blocker details.
-4. Use only these states: `working`, `waiting on Milo`, or `blocked`.
-5. Preview `/status/` at desktop and phone widths, then commit both the data
+4. Use the current state tags from the task snapshot, such as `in progress`, `waiting on you`, `blocked`, or `done`.
+5. Preview `/status/` at phone width first, then commit both the data
    change and any related layout change to `main`.
 6. Wait for GitHub Pages to finish and verify the live page before sharing it.
 
