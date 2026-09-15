@@ -131,3 +131,6 @@ article table{width:calc(100% + 1.5rem);margin-left:-.75rem;margin-right:-.75rem
 .trust-strip{grid-template-columns:1fr}
 .bar-row{grid-template-columns:6.5rem 1fr 2.6rem}
 }
+@media(max-width:650px){article table{width:100%;margin-left:0;margin-right:0;max-width:100%;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}article th,article td{min-width:0;padding:.7rem .65rem}article th{white-space:normal}}
+.reading-progress{width:100vw;max-width:100%;overflow:hidden}
+html,body{overflow-x:hidden}
