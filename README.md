@@ -41,9 +41,9 @@ For every refresh:
 
 1. Read the current active task-agent and todo state from the source systems.
 2. Replace `updated_at`, `summary`, and `items` in `_data/status.yml`.
-3. Keep every public label generic. Never publish names of factories or other
-   people, prices, account details, personal plans, message text, or private
-   blockers. `note` should describe progress in one discreet sentence.
+3. Use the exact product, file, or task name so the card is easy to recognize.
+   Keep the note discreet: never publish factory names, prices, account details,
+   personal message text, or sensitive blocker details.
 4. Use only these states: `working`, `waiting on Milo`, or `blocked`.
 5. Preview `/status/` at desktop and phone widths, then commit both the data
    change and any related layout change to `main`.

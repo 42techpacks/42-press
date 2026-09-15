@@ -1,19 +1,28 @@
-updated_at: "September 14, 2026 · 10:19 PM ET"
-summary: "4 active"
+updated_at: "September 14, 2026 · 10:23 PM ET"
+summary: "7 active"
 counts:
-  working: 3
-  waiting: 1
-  blocked: 0
+  working: 0
+  waiting: 6
+  blocked: 1
 items:
-  - name: "Production message watch"
-    state: "working"
-    note: "Watching an active production thread and handling routine follow-ups."
-  - name: "Long-sleeve spec notes"
-    state: "working"
-    note: "Turning the review into paste-ready fixes, ordered by page."
-  - name: "Knitwear reply"
+  - name: "Raglan Sleeve Striped Polo V2"
     state: "waiting on Milo"
-    note: "Draft ready. Waiting for approval before anything is sent."
-  - name: "Match alerts"
-    state: "working"
-    note: "Next fixture check is scheduled for tomorrow morning."
+    note: "Red pass 2 delivered tonight. Factory fill is ready for a veto or approval by silence."
+  - name: "WC26 tech pack to Bella"
+    state: "waiting on Milo"
+    note: "Updated pack is due Thursday, September 17."
+  - name: "Production WhatsApp watch"
+    state: "blocked"
+    note: "The WhatsApp session needs to be linked again before watching can resume."
+  - name: "IP PIN to Rivet Tax"
+    state: "waiting on Milo"
+    note: "Waiting for the IP PIN needed for the 2025 return refile."
+  - name: "Yuremane drop snipe"
+    state: "waiting on Milo"
+    note: "Waiting for Milo before the drop plan can move ahead."
+  - name: "Dec 23/25 CSC meeting declines"
+    state: "waiting on Milo"
+    note: "Waiting for Milo's call on declining the two meetings."
+  - name: "Manufacturer follow-ups"
+    state: "waiting on Milo"
+    note: "Open follow-ups are waiting on Milo's next inputs."
