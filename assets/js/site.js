@@ -24,6 +24,23 @@
     update();
   }
 
+  document.querySelectorAll('.skill-disclosure').forEach(skill => {
+    const detail = skill.querySelector('.skill-detail');
+    skill.addEventListener('toggle', () => {
+      if (!detail || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      detail.animate(skill.open ? [
+        { opacity: 0, transform: 'translateY(-8px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+      ] : [
+        { opacity: 1 }, { opacity: 0 }
+      ], { duration: 280, easing: 'cubic-bezier(.2,.8,.2,1)' });
+    });
+  });
+
+  if ('serviceWorker' in navigator) {
+    addEventListener('load', () => navigator.serviceWorker.register('/42-press/service-worker.js').catch(() => {}));
+  }
+
   document.querySelectorAll('.bar-fill').forEach(bar => {
     const width = bar.style.getPropertyValue('--w');
     bar.style.setProperty('--target', width);
