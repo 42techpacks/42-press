@@ -52,6 +52,11 @@ For every refresh:
 Most refreshes should change only `_data/status.yml`, which keeps updates fast
 and avoids touching the page design.
 
+The standing publisher refreshes this snapshot on every task lifecycle event:
+start, completion, block, unblock, or any state change. Main sends the new
+snapshot to the publisher, which updates `_data/status.yml`, pushes it at once,
+and verifies the live page. Do not wait for a scheduled batch.
+
 ## Writing level
 
 Write every 42 Press page for a high-school reader. Keep the same facts, numbers,
