@@ -1,7 +1,7 @@
 ---
 title: The Agent Illustrator VM
 date: 2026-09-14
-subtitle: A practical plan for a cloud workstation that can revise Illustrator tech packs without putting production files at risk.
+subtitle: A clear plan for a cloud computer that can edit Illustrator tech packs without putting production files at risk.
 ---
 
 
@@ -9,63 +9,63 @@ subtitle: A practical plan for a cloud workstation that can revise Illustrator t
 
 Build the pilot on **Azure Virtual Desktop (AVD), East US, Windows 11 Enterprise, Standard_D4as_v5 (4 vCPU, 16 GB RAM), 128 GB Premium SSD**, reached only over Tailscale. Install Illustrator, Node 20 LTS, and the `illustrator-mcp-server` package. Auto-start the machine when a revision job enters the queue and stop it after 30 idle minutes.
 
-This is the best first build because it gives Illustrator a currently supported desktop Windows release, enough RAM for ordinary FORTYTWO packs, hourly compute, snapshots, and clean automation. AWS EC2's normal Windows images are Windows Server, while current Illustrator requirements name Windows 10/11, not Windows Server. Paperspace is easier to open interactively but is less clean for infrastructure automation and its attractive tiers are GPU-oriented, which this 2D workflow does not need. Mac cloud works, but hourly Mac economics are poor and AWS Mac has a 24-hour minimum host allocation.
+This is the best first setup. It gives Illustrator a supported desktop version of Windows, enough RAM for most FORTYTWO packs, hourly compute, snapshots, and clean automation. AWS EC2's normal Windows images are Windows Server, while current Illustrator requirements name Windows 10/11, not Windows Server. Paperspace is easier to open interactively but is less clean for automated setup and control and its attractive tiers are GPU-oriented, which this 2D workflow does not need. Mac cloud works, but hourly Macs cost too much and AWS Mac has a 24-hour minimum host allocation.
 
-**Runner-up:** MacStadium M2 Mac mini with 16 GB RAM. It is the simplest always-on supported desktop environment if Windows automation proves unreliable. Published Mac mini pricing starts at $109/month, with higher-memory configurations above that.
+**Second choice:** MacStadium M2 Mac mini with 16 GB RAM. It is the simplest always-on supported desktop environment if Windows automation proves unreliable. Published Mac mini pricing starts at $109/month, with higher-memory configurations above that.
 
 <div class="visual" aria-label="Monthly infrastructure cost comparison">
   <div class="visual-head"><h4>What the pilot costs</h4><span class="visual-label">Monthly signal</span></div>
   <div class="bar-row"><span>AVD pilot</span><div class="bar-track"><div class="bar-fill" style="--w: 36%"></div></div><b>$30–60</b></div>
   <div class="bar-row"><span>MacStadium</span><div class="bar-track"><div class="bar-fill" style="--w: 68%"></div></div><b>$109+</b></div>
   <div class="bar-row"><span>AVD always-on</span><div class="bar-track"><div class="bar-fill" style="--w: 100%"></div></div><b>$126+</b></div>
-  <p class="visual-note">Directional monthly infrastructure cost. Adobe and any new Microsoft license are excluded.</p>
+  <p class="visual-note">Rough monthly computer cost. This does not include Adobe or a new Microsoft license.</p>
 </div>
 
 > Start small, prove the real FORTYTWO workflow, and keep the expensive machine switched off when there is no revision in the queue.
 
 ## 1. Architecture and provider choice
 
-### Target design
+### How it works
 
-1. **Control plane:** an agent runner receives a revision request, validates the instruction set, starts the VM if stopped, and opens a private Tailscale path.
-2. **Workstation:** single-user Azure AVD Windows 11 Enterprise VM, D4as_v5, 4 vCPU/16 GiB, 128 GiB SSD. No dedicated GPU for the pilot. Disable Illustrator GPU Performance if the virtual display adapter is unstable.
-3. **Application bridge:** Illustrator plus the community `illustrator-mcp-server`. The server exposes Illustrator operations to an MCP client and executes through Illustrator's ExtendScript scripting interface.
-4. **Job storage:** a private per-job folder in OneDrive/Google Drive or an Azure Storage staging container. The original `.ai` is copied into an immutable `input/` path; working and final files live under unique job IDs.
-5. **Access:** Tailscale only. No public RDP listener and no inbound internet security-group rule. Human break-glass access uses RDP over the tailnet.
-6. **Output:** versioned `.ai`, exported PDF, machine-readable run log, before/after PDF renders, and a job manifest with source and output hashes.
+1. **Job controller:** an agent runner receives a revision request, checks the instructions, starts the VM if stopped, and opens a private link through Tailscale.
+2. **Workstation:** single-user Azure AVD Windows 11 Enterprise VM, D4as_v5, 4 vCPU/16 GiB, 128 GiB SSD. No separate graphics processor for the pilot. Disable Illustrator GPU Performance if the virtual display adapter is unstable.
+3. **Illustrator connection:** Illustrator plus the community `illustrator-mcp-server`. The server exposes Illustrator operations to an MCP client and runs through Illustrator's ExtendScript scripting interface.
+4. **Job storage:** a private per-job folder in OneDrive/Google Drive or an Azure Storage staging container. The original `.ai` is copied into an locked `input/` folder; working and final files live under a unique job ID.
+5. **Access:** Tailscale only. No public RDP listener and no inbound internet security-group rule. Emergency human access uses RDP over the tailnet.
+6. **Output:** versioned `.ai`, exported PDF, run log a computer can read, before/after PDF renders, and a job record with source and output hashes.
 
 ### Provider comparison
 
-| Option | Suitable shape | Current price signal | Fit | Verdict |
+| Option | Suggested setup | Current price guide | Fit | Verdict |
 |---|---:|---:|---|---|
 | **Azure AVD** | D4as_v5, 4 vCPU/16 GB | Linux/base compute is about $0.172/hour in East US; a license-included Windows Server D4as_v5 is about $0.356/hour. AVD Windows 11 requires an eligible per-user Windows/Microsoft 365 license. | Supported Windows 11 desktop, hourly stop/start, good image/snapshot tooling | **Primary** |
-| AWS EC2 | m7i.xlarge, 4 vCPU/16 GiB | Base instance about $0.2016/hour in us-east-1 before Windows licensing; 128 GB gp3 storage extra | Excellent automation, but standard EC2 Windows is Server and Windows 11 client licensing/hosting is awkward | Do not pilot here |
-| Paperspace Core | 4+ vCPU, 16+ GB target | Hourly compute plus a monthly storage/access fee; current catalog is centered on GPU machines | Fast interactive setup and unlimited bandwidth, but weaker fit for an audited, reproducible worker | Third choice |
+| AWS EC2 | m7i.xlarge, 4 vCPU/16 GiB | Base instance about $0.2016/hour in us-east-1 before Windows licensing; 128 GB gp3 storage extra | Strong automation, but standard EC2 Windows is Server and Windows 11 desktop Windows licensing is hard to manage | Do not pilot here |
+| Paperspace Core | 4+ vCPU, 16+ GB target | Hourly compute plus a monthly storage/access fee; current catalog is centered on GPU machines | Fast interactive setup and unlimited bandwidth, but harder to audit and rebuild the same way | Third choice |
 | MacStadium | M2 Mac mini, 16 GB target | Published configurations start at $109/month; 16 GB configurations cost more | Supported macOS, stable desktop, simple named-user install | **Runner-up** |
 | AWS mac2.metal | 8 vCPU/16 GiB | Roughly $0.65/hour; **24-hour minimum Dedicated Host allocation** | Automatable and Apple hardware, but every allocation costs at least about $15.60 | Reject for daily burst use |
 
 ### Sizing
 
 - **Pilot:** 4 vCPU, 16 GB RAM, 128 GB SSD.
-- **Scale-up trigger:** move to 8 vCPU/32 GB if a representative heavy pack exceeds 70% sustained memory, export time exceeds five minutes, or Illustrator pages/saves noticeably.
-- **GPU:** not required for text, swatch, layer, table, save, and PDF-export revisions. Illustrator's documented GPU requirements matter for GPU Performance and advanced effects. Keep GPU Performance off in the pilot and prove the actual pack workload. Add a GPU VM only if the pilot shows incorrect rendering or unacceptable pan/export performance.
+- **When to upgrade:** move to 8 vCPU/32 GB if a real heavy pack exceeds 70% memory for a steady period, export time exceeds five minutes, or Illustrator pages/saves noticeably.
+- **GPU:** not required for text, swatch, layer, table, save, and PDF-export revisions. Illustrator's documented GPU requirements matter for GPU Performance and more advanced effects. Keep GPU Performance off in the pilot and test it with real packs. Add a GPU VM only if the pilot shows incorrect rendering or unacceptable pan/export performance.
 
 ## 2. Adobe licensing
 
 - Adobe's current product terms define a “Computer” as a physical **or virtual** device. A subscription can be activated on up to two computers, but the apps may not be used on both simultaneously.
-- Milo's VM therefore consumes one activation. If his Mac is already one activation, the VM can be the second. The worker must not use Illustrator while Milo is using it on the Mac under the same named-user seat.
+- Milo's VM therefore consumes one activation. If his Mac is already one activation, the VM can be the second. The worker cannot use Illustrator at the same time that Milo uses it on his Mac with the same named-user seat.
 - A third activation triggers a sign-out/deactivation flow. Rebuilding the VM can look like a new computer, so deauthorize the old image when practical and keep the image identity stable.
-- **Teams does not turn one seat into concurrent team use.** It adds Admin Console management, seat assignment/reassignment, centralized billing, and support. Every human user still needs a named-user seat, and each assigned user remains subject to activation/concurrency limits. If Kenny and Milo both need independent simultaneous access, buy and assign separate Teams seats.
-- Creative Cloud depends on online subscription validation and can present repeat sign-in or device-limit dialogs. Treat login as a human-only break-glass step: alert Milo, open private RDP over Tailscale, let him complete login/MFA, then resume the queued job. Never store his Adobe password in a script or image.
-- Before production, obtain written confirmation from Adobe sales/support that a dedicated AVD VM, named-user login, and agent-triggered scripting are acceptable for this workflow. Adobe permits named-user activation on virtual devices in its terms, but support for a particular virtualization setup may be best-effort.
+- **Teams does not let two people use one seat at the same time.** It adds Admin Console management, seat assignment/reassignment, one place for billing, and support. Every human user still needs a named-user seat, and each assigned user still has activation/concurrency limits. If Kenny and Milo both need independent simultaneous access, buy and assign separate Teams seats.
+- Creative Cloud depends on online subscription validation and can present repeat sign-in or device-limit dialogs. Only a person should handle a login problem: alert Milo, open private RDP over Tailscale, let him complete login/MFA, then resume the queued job. Never store his Adobe password in a script or image.
+- Before production, obtain written confirmation from Adobe sales/support that a dedicated AVD VM, named-user login, and agent-triggered scripting are acceptable for this workflow. Adobe permits named-user activation on virtual devices in its terms, but support for a specific virtual setup may get limited support.
 
 ## 3. VM software stack
 
 ### Operating system
 
-Use **Windows 11 Enterprise 23H2 or 24H2 through Azure Virtual Desktop**, not Windows Server. The current Illustrator requirements page lists supported Windows 11 and Windows 10 releases. AVD requires an eligible license such as Microsoft 365 Business Premium/E3/E5 or Windows Enterprise/VDA per user. Confirm FORTYTWO's Microsoft entitlement before provisioning.
+Use **Windows 11 Enterprise 23H2 or 24H2 through Azure Virtual Desktop**, not Windows Server. The current Illustrator requirements page lists supported Windows 11 and Windows 10 releases. AVD requires an eligible license such as Microsoft 365 Business Premium/E3/E5 or Windows Enterprise/VDA per user. Check FORTYTWO's Microsoft entitlement before provisioning.
 
-### Installed components
+### What to install
 
 - Adobe Creative Cloud Desktop and current stable Illustrator
 - Node.js 20 LTS or later
@@ -78,9 +78,9 @@ Use **Windows 11 Enterprise 23H2 or 24H2 through Azure Virtual Desktop**, not Wi
 - Cloud-sync client only if used for handoff; otherwise use signed object-storage transfers
 - FORTYTWO production font bundle with license records
 
-### Verified MCP install paths
+### Checked ways to install MCP
 
-The user supplied `github.com/sr1412/illustrator-mcp-server`. Its current page/README resolves to the maintained package/repository under `ie3jp/illustrator-mcp-server`; pin the exact release and commit used in production rather than following `latest` silently.
+The user supplied `github.com/sr1412/illustrator-mcp-server`. Its current page/README points to the active package and repo under `ie3jp/illustrator-mcp-server`; lock production to an exact release and commit. Do not silently follow `latest`.
 
 **Claude Code:**
 
@@ -103,7 +103,7 @@ claude mcp add illustrator-mcp -- npx illustrator-mcp-server
 }
 ```
 
-**Pinned production install (recommended):** clone an approved commit, run `npm install` and `npm run build`, then register `node C:\path\to\illustrator-mcp-server\dist\index.js`. Commit `package-lock.json`, checksum the build, scan dependencies, and promote upgrades only after the test pack passes.
+**Locked production install (recommended):** clone an approved commit, run `npm install` and `npm run build`, then register `node C:\path\to\illustrator-mcp-server\dist\index.js`. Commit `package-lock.json`, check the build file hash, scan dependencies, and upgrade only after the test pack passes.
 
 ### Connectivity
 
@@ -111,70 +111,70 @@ claude mcp add illustrator-mcp -- npx illustrator-mcp-server
 - Turn on Tailscale ACLs so only the runner and named admins reach the VM.
 - Block public inbound traffic at Azure NSG level. Do not expose TCP 3389.
 - Use RDP over the VM's Tailscale IP only for setup, Adobe re-login, or modal recovery.
-- Restrict outbound traffic where practical, while allowing Adobe, Microsoft, GitHub/npm, Tailscale, and the chosen file store.
+- Limit outgoing traffic where practical, while allowing Adobe, Microsoft, GitHub/npm, Tailscale, and the chosen file store.
 
 ### File transfer
 
-Preferred production flow:
+Recommended production steps:
 
 1. Agent creates `jobs/<job-id>/input`, `working`, `output`, and `logs`.
-2. Upload original `.ai` to immutable `input/`; record SHA-256.
+2. Upload original `.ai` to immutable `input/`; record its SHA-256 hash.
 3. Copy to `working/`; never edit the source in place.
 4. After save/export/verification, upload `.ai`, PDF, thumbnails, manifest, and log to `output/`.
 5. Deliver Drive links to the final artifacts. Keep files private by default.
 
-A synced Drive folder is acceptable for the pilot. Object storage with short-lived signed URLs and lifecycle deletion is safer for production because sync conflicts cannot overwrite the source.
+A synced Drive folder is acceptable for the pilot. Object storage with short-lived signed URLs and automatic deletion is safer for production because a sync problem cannot overwrite the source.
 
 ## 4. Agent workflow
 
-### Per-job close-the-loop sequence
+### Steps for every job
 
-1. **Intake:** receive the `.ai` plus a structured revision instruction. Reject PDF-only input when native Illustrator editing is required.
+1. **Intake:** receive the `.ai` plus a clear revision instructions. Reject PDF-only input when editing in Illustrator is required.
 2. **Preflight:** duplicate the original, hash it, open it in Illustrator, confirm fonts and linked assets, list pages/artboards/layers, and save a baseline PDF.
-3. **Plan:** translate instructions into bounded operations and a “must not touch” set. For the current FORTYTWO pattern: edit existing text in place; new or changed text is red; preserve font, size, position, and layer; do not modify drawings, vector construction, artboard size, or unrelated copy.
-4. **Execute:** invoke only the required MCP tools. Save after logical batches. Use deterministic identifiers where possible: layer name, text contents, artboard, object bounds.
-5. **Validate structurally:** re-read affected text/objects, check values, count changed objects, verify no prohibited layer changed, detect missing fonts/links, and compare document metadata.
-6. **Validate visually:** export PDF, render every affected page at high resolution, inspect placement, overflow, red text, glyphs, and nearby untouched content. Run whole-document text checks for stale values and repeated footer/page-number errors.
-7. **Deliver:** save a new `.ai` revision, exported PDF, change log, and exception list. Return links and a concise pass/fail report.
-8. **Human gate:** for the pilot, Milo reviews the final PDF before it is sent to a factory. Once the test set is clean, low-risk revisions may auto-complete, but external factory sends stay separately authorized.
+3. **Plan:** translate instructions into bounded operations and a “do not touch” set. For the current FORTYTWO pattern: edit existing text in place; new or changed text is red; preserve font, size, position, and layer; do not modify drawings, vector construction, artboard size, or unrelated copy.
+4. **Execute:** invoke only the required MCP tools. Save after logical batches. Use exact labels where possible: layer name, text contents, artboard, object bounds.
+5. **Check the file structure:** re-read affected text/objects, check values, count changed objects, verify no protected layer changed, check for missing fonts and links, and compare document metadata.
+6. **Check every page:** export PDF, render every affected page at high resolution, inspect placement, overflow, red text, glyphs, and nearby untouched content. Run whole-document text checks for stale values and repeated footer/page-number errors.
+7. **Deliver:** save a new `.ai` revision, exported PDF, change log, and list of anything left open. Return links and a concise pass/fail report.
+8. **Human gate:** for the pilot, Milo reviews the final PDF before it is sent to a factory. Once the test set is clean, simple, low-risk edits may finish on their own, but external factory sends stay separately authorized.
 
 ### Standing guardrails
 
 - Never overwrite the only original.
 - Never touch vector drawings, construction geometry, placed photos, or initial design decisions unless a job specifically authorizes them.
 - Fail closed on missing fonts, missing linked assets, ambiguous duplicate text, unknown dialogs, save-format warnings, or unexpected object-count changes.
-- Initial concept/design and complex vector drafting remain human work. The system is for iterations, measurements, labels, color/text rules, revision notes, variants, page numbers, footers, and exports.
+- Early design work and complex vector drafting remain human work. The system is for iterations, measurements, labels, color/text rules, revision notes, variants, page numbers, footers, and exports.
 
-## 5. Reliability engineering
+## 5. Keeping it reliable
 
 ### Runtime mode
 
-Start with **job-triggered start plus 30-minute idle shutdown**. A few active hours per day do not justify 24/7 compute. Keep the OS disk and image while stopped. If cold start plus Illustrator startup materially slows the team, move to a weekday working-hours schedule, not 24/7.
+Start with **job-triggered start plus 30-minute idle shutdown**. A few active hours per day do not justify 24/7 compute. Keep the OS disk and image while stopped. If cold start plus Illustrator startup slows the team too much, move to a weekday working-hours schedule, not 24/7.
 
 ### Watchdog and recovery
 
 - Scheduled watchdog checks: VM reachable, Illustrator process alive, MCP health check responds, free disk >20 GB, font/link preflight clean.
-- On MCP failure: restart MCP once. On Illustrator hang: capture screenshot and process dump, force-close once, reopen the working copy, and resume only from the last confirmed save.
-- Unknown modal: capture screenshot, stop automation, alert a human. Do not blindly press Enter.
-- Queue each file to one worker at a time. Illustrator is a desktop app, not a concurrent render service.
+- On MCP failure: restart MCP once. On Illustrator hang: capture screenshot and process dump, force it to close once, reopen the working copy, and resume only from the last confirmed save.
+- Unknown pop-up window: capture screenshot, stop automation, alert a human. Do not blindly press Enter.
+- Queue each file to one worker at a time. Illustrator is a desktop app, cannot handle several files at once.
 
 ### Rebuild under 30 minutes
 
 - Base image contains patched Windows, Node, Git, Tailscale, monitoring, and scripts, but **no Adobe credentials or private production files**.
 - Keep an Azure Compute Gallery image or managed image plus Infrastructure-as-Code for network, VM, disk, identity, NSG, schedules, and monitoring.
 - Keep a separate encrypted data disk or cloud store for job data.
-- Rebuild drill: provision from image, join tailnet, install/verify pinned MCP build, have Milo complete Adobe login, run smoke test. Adobe login time is human-dependent and should not be counted as unattended rebuild time.
+- Rebuild drill: provision from image, join tailnet, install/verify pinned MCP build, have Milo complete Adobe login, run smoke test. Adobe login time is dependent on a person and should not be counted as automatic rebuild time.
 
 ### Updates
 
-- Windows: monthly maintenance window, seven-day deferral after Patch Tuesday, snapshot first, run smoke pack after reboot.
+- Windows: monthly planned update time, seven-day deferral after Patch Tuesday, snapshot first, run smoke pack after reboot.
 - Illustrator/Creative Cloud: disable automatic major-version updates. Promote updates only after clone testing.
 - MCP/npm: pin commit and lockfile; monthly dependency review; no unattended `latest` upgrades.
-- Fonts: store one approved, versioned font bundle; document licenses; install system-wide; hash files; preflight every pack. Missing or substituted fonts is a hard failure.
+- Fonts: store one approved, versioned font bundle; document licenses; install system-wide; hash files; preflight every pack. Missing or substituted fonts is a reason to stop.
 
-### Common failure modes
+### Common problems
 
-| Failure | Detection | Response |
+| Failure | How to spot it | What to do |
 |---|---|---|
 | Adobe sign-in/device-limit prompt | Window title/screenshot + MCP timeout | Pause, notify Milo, private RDP re-auth |
 | Missing font/substitution | Illustrator preflight + text geometry change | Stop; install licensed font or ask designer |
@@ -199,19 +199,19 @@ Assume 3 active editing hours per weekday, 22 days/month = **66 compute hours**.
 | Tailscale | $0 for a small pilot | Subject to current user/device plan limits |
 | Adobe | $0 incremental if existing second activation is available | Separate Teams seats cost extra if Milo and Kenny need simultaneous independent use |
 | Eligible Windows/M365 license | $0 if already owned; otherwise plan-dependent | Confirm before build |
-| **Expected infrastructure total** | **$30-$60/month** | Excludes existing Adobe and any new Microsoft/Teams licenses |
+| **Expected computer total** | **$30-$60/month** | Excludes existing Adobe and any new Microsoft/Teams licenses |
 
 ### Always-on comparison
 
-- Azure D4as_v5 base compute at 730 hours: about **$126/month**; license-included Windows Server comparison: about **$260/month**, plus disk/backups. Do not choose this for the pilot.
+- Azure D4as_v5 base compute at 730 hours: about **$126/month**; Windows Server price with a license: about **$260/month**, plus disk/backups. Do not choose this for the pilot.
 - MacStadium: **from $109/month**, likely higher for the recommended 16 GB configuration, but predictable and always available.
-- AWS mac2.metal: about **$15.60 minimum each time a host is allocated**, even for a short job, because of the 24-hour minimum. Daily allocation is economically wrong.
+- AWS mac2.metal: about **$15.60 minimum each time a host is allocated**, even for a short job, because of the 24-hour minimum. Daily allocation is too expensive.
 
-Set Azure Cost Management budgets at $75 warning and $100 hard operational review. Add an automation check that shuts down orphaned VMs nightly.
+Set Azure Cost Management budgets at $75 warning and $100 required cost review. Add an automation check that shuts down orphaned VMs nightly.
 
-## 7. Ordered build plan
+## 7. Build plan
 
-### Phase 0 - licensing check (Milo, 30-60 minutes)
+### Phase 0 - check licenses (Milo, 30-60 minutes)
 
 1. Confirm current Adobe plan and which two devices are activated.
 2. Confirm an eligible AVD Windows license or price Microsoft 365 Business Premium/Windows VDA.
@@ -238,7 +238,7 @@ Set Azure Cost Management budgets at $75 warning and $100 hard operational revie
 2. Pin, build, and register the MCP server.
 3. Enumerate its tools and map allowed operations for tech-pack edits.
 4. Add health checks, tool timeouts, modal detection, save checkpoints, PDF export, rendering, and diff checks.
-5. Build a structured job schema: input file, requested edits, red-change rule, prohibited layers/objects, expected pages, and output paths.
+5. Build a structured job schema: input file, requested edits, red-change rule, protected layers/objects, expected pages, and output paths.
 
 ### Phase 4 - pilot (half day plus Milo review)
 
@@ -262,11 +262,11 @@ Then run 5-10 shadow jobs where the agent output is compared with Milo's manual 
 
 **Milo must do:** Adobe purchase/plan decisions, Adobe login and MFA, device deactivation approval, Microsoft license decision, font-license confirmation, initial pack/design decisions, and pilot sign-off. Any factory send remains a separately authorized action.
 
-**Elapsed time:** one focused day to stand up a working pilot if licenses are ready; 2-3 business days for monitoring, golden-pack tests, recovery scripts, and a production-ready handoff. Adobe support confirmation may take longer.
+**Elapsed time:** one focused day to stand up a working pilot if licenses are ready; 2-3 business days for monitoring, golden-pack tests, recovery scripts, and a ready-to-use setup. Adobe support confirmation may take longer.
 
-## 8. Risk register
+## 8. Main risks
 
-| Risk | Likelihood / impact | Control |
+| Risk | Chance / harm | Control |
 |---|---|---|
 | Adobe licensing/ToS interpretation for autonomous use | Medium / High | Dedicated named-user VM, no concurrent use, written Adobe confirmation before production; do not share credentials |
 | Adobe account/device flag or forced re-login | Medium / High | Stable VM identity, second-seat inventory, human re-auth runbook, alert on modal |
@@ -277,7 +277,7 @@ Then run 5-10 shadow jobs where the agent output is compared with Milo's manual 
 | Agent edits wrong duplicate text/object | Medium / High | Require artboard/layer/bounds context; structural readback plus visual diff |
 | Credentials or production files exposed on cloud VM | Low-Medium / High | No credentials in image/scripts, disk encryption, least privilege, Tailscale, no public RDP, short retention, audit logs |
 | Fonts cannot legally or technically be installed | Medium / High | License audit, approved font package, hash and preflight; stop on substitution |
-| Windows/Adobe/npm update breaks automation | Medium / Medium | Pinned versions, staged updates, snapshot, golden-pack regression, rollback |
+| Windows/Adobe/npm update breaks automation | Medium / Medium | Pinned versions, staged updates, snapshot, test with a known pack, rollback |
 | VM left running | Medium / Low | idle shutdown, nightly stop, budget alerts |
 | Automation sends an unreviewed pack to a factory | Low / High | Separate editing from external delivery; explicit review/authorization gate |
 

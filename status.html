@@ -1,0 +1,32 @@
+---
+layout: default
+title: Work Status
+permalink: /status/
+---
+<section class="status-hero reveal">
+  <div>
+    <span class="kicker">42 Press / Live Desk</span>
+    <h1>What's in<br><em>motion.</em></h1>
+  </div>
+  <div class="status-aside">
+    <span class="pulse" aria-hidden="true"></span>
+    <strong>{{ site.data.status.summary }}</strong>
+    <span>Last refreshed<br>{{ site.data.status.updated_at }}</span>
+  </div>
+</section>
+
+<section class="status-board" aria-label="Current work">
+  <div class="status-board-head reveal">
+    <span>Work item</span><span>State</span><span>Latest note</span>
+  </div>
+  {% for item in site.data.status.items %}
+  {% assign state_class = item.state | slugify %}
+  <article class="status-row reveal">
+    <h2><span class="status-index">0{{ forloop.index }}</span>{{ item.name }}</h2>
+    <div><span class="status-pill {{ state_class }}"><i></i>{{ item.state }}</span></div>
+    <p>{{ item.note }}</p>
+  </article>
+  {% endfor %}
+</section>
+
+<p class="status-footnote reveal">A quiet desk does not mean a stopped desk. This is a public, discreet snapshot and refreshes when the work changes.</p>

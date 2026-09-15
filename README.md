@@ -29,3 +29,38 @@ Georgia/serif.
 ## Publishing authentication
 
 A repo-scoped fine-grained PAT is stored in Milo's vault as `GitHub 42 Press publish token`. It is restricted to the `42techpacks/42-press` repository with **Contents: read and write**. Use that saved credential for future commits instead of asking Milo to approve a new device-flow code.
+
+## Refresh the work status page
+
+The live desk is at `status.html`; all changing content lives in
+`_data/status.yml`. The site is static, so the page shows the most recent
+published snapshot rather than querying any private task system from the
+browser.
+
+For every refresh:
+
+1. Read the current active task-agent and todo state from the source systems.
+2. Replace `updated_at`, `summary`, and `items` in `_data/status.yml`.
+3. Keep every public label generic. Never publish names of factories or other
+   people, prices, account details, personal plans, message text, or private
+   blockers. `note` should describe progress in one discreet sentence.
+4. Use only these states: `working`, `waiting on Milo`, or `blocked`.
+5. Preview `/status/` at desktop and phone widths, then commit both the data
+   change and any related layout change to `main`.
+6. Wait for GitHub Pages to finish and verify the live page before sharing it.
+
+Most refreshes should change only `_data/status.yml`, which keeps updates fast
+and avoids touching the page design.
+
+## Writing level
+
+Write every 42 Press page for a high-school reader. Keep the same facts, numbers,
+recommendations, warnings, and source links, but use short sentences and plain
+words. Explain a technical term the first time it appears. This rule applies to
+new posts and to edits of existing posts.
+
+## Publisher routing
+
+Keep 42 Press publishing with the existing standing publisher task so its
+GitHub session can be reused. Route new posts, page changes, and status refreshes
+to that publisher instead of starting a new publishing session.
