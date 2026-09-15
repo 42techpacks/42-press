@@ -1,0 +1,10 @@
+title: 42 Press
+description: Specs and reports, written down.
+markdown: kramdown
+highlighter: rouge
+defaults:
+  - scope:
+      type: posts
+    values:
+      layout: post
+      permalink: /:title/
