@@ -1,28 +1,22 @@
-updated_at: "September 14, 2026 · 10:23 PM ET"
-summary: "7 active"
+updated_at: "September 15, 2026 · 12:10 AM ET"
+summary: "5 products"
 counts:
-  working: 0
-  waiting: 6
-  blocked: 1
+  working: 3
+  waiting: 0
+  blocked: 0
 items:
-  - name: "Raglan Sleeve Striped Polo V2"
-    state: "waiting on Milo"
-    note: "Red pass 2 delivered tonight. Factory fill is ready for a veto or approval by silence."
-  - name: "WC26 tech pack to Bella"
-    state: "waiting on Milo"
-    note: "Updated pack is due Thursday, September 17."
-  - name: "Production WhatsApp watch"
-    state: "blocked"
-    note: "The WhatsApp session needs to be linked again before watching can resume."
-  - name: "IP PIN to Rivet Tax"
-    state: "waiting on Milo"
-    note: "Waiting for the IP PIN needed for the 2025 return refile."
-  - name: "Yuremane drop snipe"
-    state: "waiting on Milo"
-    note: "Waiting for Milo before the drop plan can move ahead."
-  - name: "Dec 23/25 CSC meeting declines"
-    state: "waiting on Milo"
-    note: "Waiting for Milo's call on declining the two meetings."
-  - name: "Manufacturer follow-ups"
-    state: "waiting on Milo"
-    note: "Open follow-ups are waiting on Milo's next inputs."
+  - name: "Home Field Tee V3"
+    state: "sample in hand"
+    note: "Current production status: sample in hand."
+  - name: "Home Field Long Sleeve V1"
+    state: "sent to factory"
+    note: "Current production status: sent to factory."
+  - name: "Flag Tee V2"
+    state: "sent to factory"
+    note: "Current production status: sent to factory."
+  - name: "Legend Crewneck V2"
+    state: "sample in hand"
+    note: "Current production status: sample in hand."
+  - name: "Knit Zip-Up"
+    state: "sampling"
+    note: "Current production status: sampling."
