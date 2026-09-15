@@ -61,8 +61,9 @@ and verifies the live page. Do not wait for a scheduled batch.
 
 Write every 42 Press page for a high-school reader. Keep the same facts, numbers,
 recommendations, warnings, and source links, but use short sentences and plain
-words. Explain a technical term the first time it appears. This rule applies to
-new posts and to edits of existing posts.
+words. Explain a technical term the first time it appears. Be brief: lead with
+the decision, cut repeated reasoning, and use tables or bullets when they say it
+faster. This rule applies to new posts and to edits of existing posts.
 
 ## Publisher routing
 
