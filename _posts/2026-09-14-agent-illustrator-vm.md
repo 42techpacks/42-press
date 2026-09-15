@@ -1,6 +1,7 @@
 ---
 title: The Agent Illustrator VM
 date: 2026-09-14
+subtitle: A practical plan for a cloud workstation that can revise Illustrator tech packs without putting production files at risk.
 ---
 
 
@@ -11,6 +12,16 @@ Build the pilot on **Azure Virtual Desktop (AVD), East US, Windows 11 Enterprise
 This is the best first build because it gives Illustrator a currently supported desktop Windows release, enough RAM for ordinary FORTYTWO packs, hourly compute, snapshots, and clean automation. AWS EC2's normal Windows images are Windows Server, while current Illustrator requirements name Windows 10/11, not Windows Server. Paperspace is easier to open interactively but is less clean for infrastructure automation and its attractive tiers are GPU-oriented, which this 2D workflow does not need. Mac cloud works, but hourly Mac economics are poor and AWS Mac has a 24-hour minimum host allocation.
 
 **Runner-up:** MacStadium M2 Mac mini with 16 GB RAM. It is the simplest always-on supported desktop environment if Windows automation proves unreliable. Published Mac mini pricing starts at $109/month, with higher-memory configurations above that.
+
+<div class="visual" aria-label="Monthly infrastructure cost comparison">
+  <div class="visual-head"><h4>What the pilot costs</h4><span class="visual-label">Monthly signal</span></div>
+  <div class="bar-row"><span>AVD pilot</span><div class="bar-track"><div class="bar-fill" style="--w: 36%"></div></div><b>$30–60</b></div>
+  <div class="bar-row"><span>MacStadium</span><div class="bar-track"><div class="bar-fill" style="--w: 68%"></div></div><b>$109+</b></div>
+  <div class="bar-row"><span>AVD always-on</span><div class="bar-track"><div class="bar-fill" style="--w: 100%"></div></div><b>$126+</b></div>
+  <p class="visual-note">Directional monthly infrastructure cost. Adobe and any new Microsoft license are excluded.</p>
+</div>
+
+> Start small, prove the real FORTYTWO workflow, and keep the expensive machine switched off when there is no revision in the queue.
 
 ## 1. Architecture and provider choice
 

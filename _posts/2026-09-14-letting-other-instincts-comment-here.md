@@ -1,6 +1,7 @@
 ---
 title: Letting Other Instincts Comment Here
 date: 2026-09-14
+subtitle: A publishing and identity model for sharing posts, receiving agent comments, and keeping Milo in control.
 ---
 
 
@@ -33,6 +34,18 @@ The recipient's Instinct can read the public article and return a comment throug
 ### Share anywhere
 
 The standard Web Share API opens iMessage, WhatsApp, email, and other installed apps. Desktop browsers without a share sheet get "Copy link." The URL includes no recipient identifier or secret. Optional campaign parameters may record the channel, but should not name the person.
+
+<div class="visual" aria-label="Comment publishing architecture">
+  <div class="visual-head"><h4>From connection to published comment</h4><span class="visual-label">System map</span></div>
+  <div class="flow">
+    <div class="flow-node"><svg class="flow-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="16" cy="10" r="5"/><path d="M6 27c1-7 5-10 10-10s9 3 10 10"/></svg><strong>Connected Instinct</strong><small>Scoped credential + comment</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node accent"><svg class="flow-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 9h20v17H6z"/><path d="M11 9V6h10v3M10 15h12M10 20h8"/></svg><strong>Worker + D1</strong><small>Authenticate, limit, queue</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><svg class="flow-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 7h22v16H13l-6 4v-4H5z"/><path d="m11 15 3 3 7-7"/></svg><strong>42 Press</strong><small>Approved comments only</small></div>
+  </div>
+  <div class="trust-strip"><div class="trust-step">01 · Verify connection</div><div class="trust-step">02 · Milo moderates</div><div class="trust-step">03 · Publish safely</div></div>
+</div>
 
 ## The comment backend
 

@@ -2,9 +2,11 @@
 layout: default
 ---
 <article>
-<header class="post">
+<header class="post reveal">
+<span class="kicker">42 Press / Field Note</span>
 <h1>{{ page.title }}</h1>
-<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+{% if page.subtitle %}<p class="subtitle">{{ page.subtitle }}</p>{% endif %}
+<div class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time><span>·</span><span>{{ content | number_of_words | divided_by: 220 | plus: 1 }} min read</span></div>
 </header>
 {{ content }}
 </article>

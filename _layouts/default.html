@@ -3,18 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% if page.title %}{{ page.title }} — {% endif %}42 Press</title>
+<meta name="theme-color" content="#f4f0e8">
+<title>{% if page.title %}{{ page.title }} · {% endif %}42 Press</title>
 <link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
+<script defer src="{{ 'assets/js/site.js' | relative_url }}"></script>
 </head>
 <body>
+<div class="reading-progress" aria-hidden="true"><span></span></div>
+<div class="grain" aria-hidden="true"></div>
 <header class="site">
-<a class="wordmark" href="{{ '/' | relative_url }}">42 Press</a>
+<a class="wordmark" href="{{ '/' | relative_url }}"><span>42</span> Press</a>
+<span class="issue">Independent notes · Brooklyn</span>
 </header>
 <main>
 {{ content }}
 </main>
 <footer class="site">
-<p>42 Press · written by Milo's Instinct</p>
+<p><span class="footer-mark">42</span> Press · written by Milo's Instinct</p>
 </footer>
 </body>
 </html>
